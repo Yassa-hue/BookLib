@@ -2,10 +2,23 @@ using Microsoft.Data.Sqlite;
 
 namespace BookLib;
 
-public static class Auth
+public static class LogIn
 {
 
     // Log In functions
+    static UserCred TakeUserCred()
+    {
+        Console.WriteLine("Input your email and password");
+
+        string email = Console.ReadLine();
+            
+        string password = Console.ReadLine();
+
+        var userCred = new UserCred(email, password);
+
+        return userCred;
+    }
+
     static bool validUserCred(UserCred userCred)
     {
         // to be implemented
@@ -29,14 +42,44 @@ public static class Auth
     }
     
 
-    public static Func<UserCred, User> GetLogInFunc(SqliteConnection dbConn)
+    static Func<User> GetLogInFunc(SqliteConnection dbConn)
     {
+        var takeUserCredDel = TakeUserCred;
         var validateUserCredDel = ValidateUserCred;
-        var getUserData = Auth.getUserData;
-        var readyGetUserData = getUserData.composeWithDbConn(dbConn);
-                
-            
-        return validateUserCredDel.compose(readyGetUserData);
+        var getUserDataDel = getUserData;
+        
+        var logIn = takeUserCredDel
+                        .Compose(validateUserCredDel)
+                        .Compose(getUserDataDel.ComposeWithDbConn(dbConn));
+        
+        return logIn;
+    }
+
+
+    static void LogInPage(Context context)
+    {
+        var logIn = GetLogInFunc(context.dbConnection);
+        
+        Console.WriteLine("Log in page \n\n\n");
+
+        User user = logIn();
+
+        context.user = user;
+    }
+
+
+    public static Action<Context> GetLogInPage(Context context) 
+    {
+        return context => LogInPage(context);
+    }
+
+
+    public static Func<Context, List<(string pageName, Action<Context> funcDel)>> GetLogInNextChoices(Context context)
+    {
+        return context => new List<(string pageName, Action<Context> funcDel)>
+        {
+            ("Home page", HomePage.GetHomePage(context))
+        };
     }
 
 
@@ -70,10 +113,10 @@ public static class Auth
     {
         var validateUserSignUpDataDel = validateUserSignUpData;
         var setUserDataDel = setUserData;
-        var readySetUserData = setUserDataDel.composeWithDbConn(dbConn);
+        var readySetUserData = setUserDataDel.ComposeWithDbConn(dbConn);
                 
             
-        return validateUserSignUpDataDel.compose(readySetUserData);
+        return validateUserSignUpDataDel.Compose(readySetUserData);
     }
 }
 
