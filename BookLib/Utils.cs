@@ -19,6 +19,11 @@ public static class Utils
         return (x) => f2(f1(x));
     }
     
+    public static Action<T1> Compose<T1, T2>(this Func<T1, T2> f1, Action<T2> f2)
+    {
+        return x => f2(f1(x));
+    }
+    
     public static Func<T3> Compose<T2, T3>(this Func<T2> f1, Func<T2, T3> f2)
     {
         return () => f2(f1());

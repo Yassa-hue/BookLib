@@ -40,6 +40,12 @@ public class Page
                 nextSteps = SignUp.GetSignUpNextChoices(context);
                 break;
             }
+
+            case "List books":
+            {
+                nextSteps = ListBooksPage.GetListBooksNextChoices(context);
+                break;
+            }
             
             
         }
@@ -49,5 +55,3 @@ public class Page
     
 
 }
-
-

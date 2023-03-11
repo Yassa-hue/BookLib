@@ -7,13 +7,14 @@ public class HomePage
     {
         var nextSteps = new List<(string pageName, Action<Context> funcDel, bool adminOnly)>
         {
-            ("Info page", InfoPage.getInfoPage(), false)
+            ("Info page", InfoPage.getInfoPage(), false),
+            ("List books", ListBooksPage.GetListBooks(), false)
         };
 
         return nextSteps
-                .Where(nextStep => (!nextStep.adminOnly || nextStep.adminOnly == isAdmin) )
-                .Select(nextStep => (nextStep.pageName, nextStep.funcDel))
-                .ToList();
+            .Where(nextStep => (!nextStep.adminOnly || nextStep.adminOnly == isAdmin) )
+            .Select(nextStep => (nextStep.pageName, nextStep.funcDel))
+            .ToList();
     }
 
     static void HomePageLogic(Context context)
