@@ -4,7 +4,11 @@ using Microsoft.Data.Sqlite;
 
 namespace BookLib;
 
-
+public class Context
+{ 
+    public User user { get; set; }
+    public SqliteConnection dbConnection { get; set; }
+}
 
 public static class Utils
 {
@@ -22,11 +26,11 @@ public static class Utils
     public static SqliteConnection CreateDbConnection(string dbPath)
     {
         var connection = new SqliteConnection(dbPath);
-        
+
         connection.Open();
 
         return connection;
     }
 
-
+    
 }
