@@ -7,26 +7,25 @@ public class HomePage
     {
         var nextSteps = new List<(string pageName, Action<Context> funcDel, bool adminOnly)>
         {
-            ("Info page", InfoPage.getInfoPageDriver(), false)
+            ("Info page", InfoPage.getInfoPage(), false)
         };
 
         return nextSteps
-                .Where(nextStep => nextStep.adminOnly == isAdmin )
+                .Where(nextStep => (!nextStep.adminOnly || nextStep.adminOnly == isAdmin) )
                 .Select(nextStep => (nextStep.pageName, nextStep.funcDel))
                 .ToList();
     }
 
-    public static void openHomePage(Context context,
-        Func<bool, List<(string pageName, Action<Context> funcDel)>> getNextSteps)
+    static void HomePageLogic(Context context)
     {
-        Console.WriteLine("Home page");
-
-        var nextSteps = getNextSteps(context.user.isAdmin);
-
-        var nextStep = NextStep.getNextStep(nextSteps);
-
-        nextStep(context);
+        Console.WriteLine("Welcome " + context.user.name);
     }
 
-    // open home page 
+
+    public static Action<Context> GetHomePage()
+    {
+        return context => HomePageLogic(context);
+    }
+
+
 }

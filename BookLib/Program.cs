@@ -10,8 +10,12 @@ namespace BookLib
     {
         static void Main()
         {
+
+            Context context = new Context();
+            context.dbConnection = Utils.CreateDbConnection("");
+            context.pageName = "First page";
             
-            
+            Page.OpenPage(context, FirstPage.GetFirstPage(context));
         }
         
     }

@@ -15,8 +15,7 @@ public class InfoPage
             .ToList();
     }
 
-    public static void openInfoPage(Context context,
-        Func<bool, List<(string pageName, Action<Context> funcDel)>> getNextSteps)
+    public static void openInfoPage(Context context)
     {
         Console.WriteLine("Info page");
         
@@ -24,19 +23,10 @@ public class InfoPage
         
         
         
-        
-        
-        
-        
-        var nextSteps = getNextSteps(context.user.isAdmin);
-
-        var nextStep = NextStep.getNextStep(nextSteps);
-
-        nextStep(context);
     }
 
-    public static Action<Context> getInfoPageDriver()
+    public static Action<Context> getInfoPage()
     {
-        return (x) => openInfoPage(x, getNextsteps);
+        return context => openInfoPage(context);
     }
 }
