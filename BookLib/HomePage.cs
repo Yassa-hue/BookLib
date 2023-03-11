@@ -7,7 +7,7 @@ public class HomePage
     {
         var nextSteps = new List<(string pageName, Action<Context> funcDel, bool adminOnly)>
         {
-            // example ("search books", openSearchBooksPage, false)
+            ("Info page", InfoPage.getInfoPageDriver(), false)
         };
 
         return nextSteps
