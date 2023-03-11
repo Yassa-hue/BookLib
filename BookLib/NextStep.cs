@@ -6,10 +6,10 @@ namespace BookLib;
 public static class NextStep
 {
 
-    public static int getNextStep(List<string> nextStepChoices)
+    public static Action<Context> getNextStep(List<(string pageName, Action<Context> funcDel)> nextStepChoices)
     {
         // to be implemented
-        return -1;
+        return nextStepChoices[0].funcDel;
     }
 
 }

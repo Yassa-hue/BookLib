@@ -23,13 +23,9 @@ public class HomePage
 
         var nextSteps = getNextSteps(context.user.isAdmin);
 
-        var nextStepsTitles = nextSteps
-            .Select(step => step.pageName)
-            .ToList();
+        var nextStep = NextStep.getNextStep(nextSteps);
 
-        var nextStep = NextStep.getNextStep(nextStepsTitles);
-
-        nextSteps[nextStep].funcDel(context);
+        nextStep(context);
     }
 
     // open home page 

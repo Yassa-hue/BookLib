@@ -9,12 +9,10 @@ public static class FirstPage
         Console.WriteLine("Welcome Page");
 
         var nextSteps = getNextSteps();
+        
+        var nextStep = NextStep.getNextStep(nextSteps);
 
-        var nextStepChoices = nextSteps.Select((x) => x.pageName).ToList();
-
-        var nextStep = NextStep.getNextStep(nextStepChoices);
-
-        nextSteps[nextStep].funcDel(context);
+        nextStep(context);
     }
 
 
