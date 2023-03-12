@@ -7,41 +7,12 @@ public static class NextStep
 {
 
     
-    public static List<(string pageName, Action<Context> funcDel)> GetAllPossibleNextSteps(Context context)
+    public static List<(string pageName, Action<Context> funcDel)> GetAllPossibleNextSteps(Context context, 
+        Dictionary<string, List<(string pageName, Action<Context> funcDel)>> pageRouter)
     {
-        List<(string pageName, Action<Context> funcDel)> nextSteps = new List<(string pageName, Action<Context> funcDel)>();
-        switch (context.pageName)
-        {
-
-            case "First Page":
-            {
-                nextSteps = FirstPage.GetFirstPageNextChoices(context);
-                break;
-            }
-                
-            
-            case "Log in":
-            {
-                nextSteps = LogIn.GetLogInNextChoices(context);
-                break;
-            }
-
-            case "Sign up":
-            {
-                nextSteps = SignUp.GetSignUpNextChoices(context);
-                break;
-            }
-
-            case "List books":
-            {
-                nextSteps = ListBooksPage.GetListBooksNextChoices(context);
-                break;
-            }
-            
-            
-        }
-
-        return nextSteps;
+        // to be implemented
+        
+        return new List<(string pageName, Action<Context> funcDel)>();
     }
     
     public static (string pageName, Action<Context> funcDel) SelectNextStep(List<(string pageName, Action<Context> funcDel)> allPossibleNextSteps)
@@ -53,9 +24,19 @@ public static class NextStep
     }
 
 
-    public static Func<Context, (string pageName, Action<Context> funcDel)> GetNextStepFunc()
+    public static Func<Context, List<(string pageName, Action<Context> funcDel)>> EncloseOverPageRouter(
+        Dictionary<string, List<(string pageName, Action<Context> funcDel)>> pageRouter,
+        Func<Context,
+            Dictionary<string, List<(string pageName, Action<Context> funcDel)>>,
+            List<(string pageName, Action<Context> funcDel)>> GetAllNextStepsDel)
     {
-        var getAllPossibleNextStepsDel = GetAllPossibleNextSteps;
+        return c => GetAllNextStepsDel(c, pageRouter);
+    }
+
+
+    public static Func<Context, (string pageName, Action<Context> funcDel)> GetNextStepFunc(Dictionary<string, List<(string pageName, Action<Context> funcDel)>> pageRouter)
+    {
+        var getAllPossibleNextStepsDel = EncloseOverPageRouter(pageRouter, GetAllPossibleNextSteps);
         var selectNextStepDel = SelectNextStep;
 
         var getNextStepDel = getAllPossibleNextStepsDel.Compose(selectNextStepDel);
