@@ -2,56 +2,24 @@ namespace BookLib;
 
 public class Page
 {
-    public static void OpenPage(Context context, Action<Context> pageLogic)
+    public static void OpenPage(Context context, Action<Context> pageLogic, 
+        Func<Context, (string pageName, Action<Context> funcDel)> getNextStep)
     {
         pageLogic(context);
         
-        var nextSteps = getNextSteps(context);
-
-        var (nextPageName, nextPageFunc) = NextStep.getNextStep(nextSteps);
+        var (nextPageName, nextPageFunc) = getNextStep(context);
 
         context.pageName = nextPageName;
         
-        OpenPage(context, nextPageFunc);        
+        OpenPage(context, nextPageFunc, getNextStep);        
         
     }
 
-    public static List<(string pageName, Action<Context> funcDel)> getNextSteps(Context context)
+    public static Action<Action<Context>> CloseOpenPageFunOnContextAndNextPageFunc(Context context,
+        Func<Context, (string pageName, Action<Context> funcDel)> getNextStep)
     {
-        List<(string pageName, Action<Context> funcDel)> nextSteps = new List<(string pageName, Action<Context> funcDel)>();
-        switch (context.pageName)
-        {
-
-            case "First Page":
-            {
-                nextSteps = FirstPage.GetFirstPageNextChoices(context);
-                break;
-            }
-                
-            
-            case "Log in":
-            {
-                nextSteps = LogIn.GetLogInNextChoices(context);
-                break;
-            }
-
-            case "Sign up":
-            {
-                nextSteps = SignUp.GetSignUpNextChoices(context);
-                break;
-            }
-
-            case "List books":
-            {
-                nextSteps = ListBooksPage.GetListBooksNextChoices(context);
-                break;
-            }
-            
-            
-        }
-
-        return nextSteps;
+        return pageLogic => OpenPage(context, pageLogic, getNextStep);
     }
-    
+
 
 }
