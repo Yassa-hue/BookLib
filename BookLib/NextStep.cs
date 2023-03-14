@@ -1,45 +1,80 @@
-
+using System.Linq;
 
 namespace BookLib;
 
+
+using NextPages = List<NextPage>;
+using AccessibleNextPages = List<(string pageName, Action<Context> funcDel)>;
 
 public static class NextStep
 {
 
     
-    public static List<(string pageName, Action<Context> funcDel)> GetAllPossibleNextSteps(Context context, 
-        Dictionary<string, List<(string pageName, Action<Context> funcDel)>> pageRouter)
+    private static AccessibleNextPages GetAllAccessibleNextPages(Context context, Dictionary<string, NextPages> pageRouter)
     {
-        // to be implemented
-        
-        return new List<(string pageName, Action<Context> funcDel)>();
+        // Filter pages by accessibility
+        var accessibleNextPages = pageRouter[context.pageName]
+            .Where(page => !page.adminOnly || page.adminOnly == context.user.isAdmin)
+            .Select(page => (page.pageName, page.pageLogic)).ToList();
+
+        return accessibleNextPages;
     }
     
-    public static (string pageName, Action<Context> funcDel) SelectNextStep(List<(string pageName, Action<Context> funcDel)> allPossibleNextSteps)
+    private static (string pageName, Action<Context> funcDel)? SelectNextStep(AccessibleNextPages allPossibleNextSteps, 
+        (string pageName, Action<Context> funcDel) backStep)
     {
-        // to be implemented
+        // take the user choice and turn it into page
+        Console.WriteLine("What is your next step ?");
+        
+        Console.WriteLine("-2 ) Exit program");
+        Console.WriteLine("-1 ) Back step");
 
+        var selectChoices = allPossibleNextSteps
+            .Select((step, index) => index + " )" + step.pageName)
+            .ToList();
+
+        foreach (var choice in selectChoices)
+        {
+            Console.WriteLine(choice);
+        }
+
+        var userChoice = int.Parse(Console.ReadLine());
+
+        if (userChoice == -2)
+        {
+            return null;
+        }
+
+        if (userChoice == -1)
+        {
+            return backStep;
+        }
 
         return allPossibleNextSteps[0];
     }
 
 
-    public static Func<Context, List<(string pageName, Action<Context> funcDel)>> EncloseOverPageRouter(
-        Dictionary<string, List<(string pageName, Action<Context> funcDel)>> pageRouter,
-        Func<Context,
-            Dictionary<string, List<(string pageName, Action<Context> funcDel)>>,
-            List<(string pageName, Action<Context> funcDel)>> GetAllNextStepsDel)
+    private static Func<Context, AccessibleNextPages> EncloseOverPageRouter(
+        Dictionary<string, NextPages> pageRouter,
+        Func<Context, Dictionary<string, NextPages>, AccessibleNextPages> getAllNextStepsDel)
     {
-        return c => GetAllNextStepsDel(c, pageRouter);
+        return c => getAllNextStepsDel(c, pageRouter);
     }
 
 
-    public static Func<Context, (string pageName, Action<Context> funcDel)> GetNextStepFunc(Dictionary<string, List<(string pageName, Action<Context> funcDel)>> pageRouter)
+    private static Func<TCont, TBackStep, TNextStep> Compose<TCont, TStepsList, TBackStep, TNextStep>(Func<TCont, TStepsList> f1,
+        Func<TStepsList, TBackStep, TNextStep> f2)
     {
-        var getAllPossibleNextStepsDel = EncloseOverPageRouter(pageRouter, GetAllPossibleNextSteps);
+        return (cont, bkStep) => f2(f1(cont), bkStep);
+    }
+
+
+    public static Func<Context, (string pageName, Action<Context> funcDel), (string pageName, Action<Context> funcDel)?> GetNextStepFunc(Dictionary<string, NextPages> pageRouter)
+    {
+        var getAllPossibleNextStepsDel = EncloseOverPageRouter(pageRouter, GetAllAccessibleNextPages);
         var selectNextStepDel = SelectNextStep;
 
-        var getNextStepDel = getAllPossibleNextStepsDel.Compose(selectNextStepDel);
+        var getNextStepDel = Compose(getAllPossibleNextStepsDel, selectNextStepDel);
 
         return getNextStepDel;
     }
