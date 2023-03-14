@@ -37,7 +37,9 @@ public static class Utils
 
     public static SqliteConnection CreateDbConnection(string dbPath)
     {
-        var connection = new SqliteConnection(dbPath);
+        string dbAbsPath = Path.Combine(Environment.CurrentDirectory, dbPath);
+        
+        var connection = new SqliteConnection($@"Data Source={dbAbsPath}");
 
         connection.Open();
 

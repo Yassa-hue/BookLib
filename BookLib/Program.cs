@@ -13,7 +13,7 @@ namespace BookLib
 
             // prepare context
             Context context = new Context();
-            context.dbConnection = Utils.CreateDbConnection("");
+            context.dbConnection = Utils.CreateDbConnection("book.db");
             context.pageName = "First page";
             
             // prepare getNextStepFunc
