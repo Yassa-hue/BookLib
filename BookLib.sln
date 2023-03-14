@@ -12,5 +12,6 @@ Global
 		{CCC596D5-E0B4-4CCD-88A2-C2DF6403768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCC596D5-E0B4-4CCD-88A2-C2DF6403768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCC596D5-E0B4-4CCD-88A2-C2DF6403768B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCC596D5-E0B4-4CCD-88A2-C2DF6403768B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
