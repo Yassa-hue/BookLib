@@ -61,7 +61,7 @@ public class SignUp
     }
 
 
-    public static Action<Context> GetSignUpPage() 
+    public static Action<Context> GetSignUpPageLogic() 
     {
         return context => SignUpPage(context);
     }
@@ -71,9 +71,16 @@ public class SignUp
     {
         return new List<NextPage>
         {
-            new NextPage{pageName = "Home page", pageLogic = HomePage.GetHomePage(), adminOnly = false}
+            HomePage.GetHomePage()
         };
     }
+
+    public static NextPage GetSignUpPage()
+    {
+        return new NextPage { pageName = PageName, pageLogic = GetSignUpPageLogic(), adminOnly = false };
+    }
+    
+    
 }
 
 public record UserSignUpData(string name, string email, string password, string repeatedPassword, string phoneNum);

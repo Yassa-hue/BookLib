@@ -15,7 +15,7 @@ public class InfoPage
         return nextSteps;
     }
 
-    public static void openInfoPage(Context context)
+    public static void PrintUserInfo(Context context)
     {
         Console.WriteLine("Info page");
         
@@ -25,8 +25,16 @@ public class InfoPage
         
     }
 
-    public static Action<Context> getInfoPage()
+    public static Action<Context> GetInfoPageLogic()
     {
-        return context => openInfoPage(context);
+        return context => PrintUserInfo(context);
+    }
+    
+    
+    
+    
+    public static NextPage GetInfoPage()
+    {
+        return new NextPage { pageName = PageName, pageLogic = GetInfoPageLogic(), adminOnly = false };
     }
 }

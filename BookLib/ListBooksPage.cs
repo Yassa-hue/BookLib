@@ -7,18 +7,18 @@ public class ListBooksPage
 
 
     public const string PageName = "List Books Page";
-    public static List<Book> GetBooks(SqliteConnection dbConn)
+    private static List<Book> GetBooks(SqliteConnection dbConn)
     {
         // to be implemented
         return new List<Book>();
     }
 
-    public static void PrintBooks(List<Book> books)
+    private static void PrintBooks(List<Book> books)
     {
         // to be implemented
     }
 
-    public static Action<Context> GetListBooks()
+    public static Action<Context> GetListBooksPageLogic()
     {
         var getBooksDel = GetBooks;
         var printBooksDel = PrintBooks;
@@ -36,6 +36,10 @@ public class ListBooksPage
     }
 
 
+    public static NextPage GetListBooksPage()
+    {
+        return new NextPage { pageName = PageName, pageLogic = GetListBooksPageLogic(), adminOnly = false };
+    }
 
 }
 

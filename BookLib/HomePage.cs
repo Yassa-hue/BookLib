@@ -6,12 +6,12 @@ public class HomePage
     public const string PageName = "Home page";
     
     // home page next Options
-    public static List<NextPage> GetNextsteps()
+    public static List<NextPage> GetNextNextChoices()
     {
         var nextSteps = new List<NextPage>
         {
-            new NextPage{pageName = "Info page", pageLogic = InfoPage.getInfoPage(), adminOnly = false },
-            new NextPage{ pageName = "List books", pageLogic = ListBooksPage.GetListBooks(), adminOnly = false}
+            InfoPage.GetInfoPage(),
+            ListBooksPage.GetListBooksPage()
         };
 
         return nextSteps;
@@ -23,9 +23,15 @@ public class HomePage
     }
 
 
-    public static Action<Context> GetHomePage()
+    public static Action<Context> GetHomePageLogic()
     {
         return context => HomePageLogic(context);
+    }
+    
+    
+    public static NextPage GetHomePage()
+    {
+        return new NextPage { pageName = PageName, pageLogic = GetHomePageLogic(), adminOnly = false };
     }
 
 

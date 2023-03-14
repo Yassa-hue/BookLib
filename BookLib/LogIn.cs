@@ -72,7 +72,7 @@ public static class LogIn
     }
 
 
-    public static Action<Context> GetLogInPage() 
+    public static Action<Context> GetLogInPageLogic() 
     {
         return context => LogInPage(context);
     }
@@ -82,8 +82,15 @@ public static class LogIn
     {
         return new List<NextPage>
         {
-            new NextPage{pageName = "Home page", pageLogic = HomePage.GetHomePage(), adminOnly = false}
+            HomePage.GetHomePage()
         };
+    }
+    
+    
+    
+    public static NextPage GetLogInPage()
+    {
+        return new NextPage { pageName = PageName, pageLogic = GetLogInPageLogic(), adminOnly = false };
     }
     
 }

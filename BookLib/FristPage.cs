@@ -12,7 +12,7 @@ public static class FirstPage
         Console.WriteLine("Welcome to our Online Reader");
     }
 
-    public static Action<Context> GetFirstPage(Context context)
+    public static Action<Context> GetFirstPageLogic()
     {
         return context => FirstPageWelcomeMsg(context);
     }
@@ -22,11 +22,15 @@ public static class FirstPage
     {
         return new List<NextPage>
         {
-            new NextPage{pageName = "Log In page", pageLogic = LogIn.GetLogInPage(), adminOnly = false},
-            new NextPage{pageName = "Sign Up page", pageLogic = SignUp.GetSignUpPage(), adminOnly = false}
+            LogIn.GetLogInPage(),
+            SignUp.GetSignUpPage()
         };
     }
 
 
+    public static NextPage GetFirstPage()
+    {
+        return new NextPage { pageName = PageName, pageLogic = GetFirstPageLogic(), adminOnly = false };
+    }
 
 }

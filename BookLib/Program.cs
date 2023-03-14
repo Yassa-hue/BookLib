@@ -14,7 +14,7 @@ namespace BookLib
             // prepare context
             Context context = new Context();
             context.dbConnection = Utils.CreateDbConnection("book.db");
-            context.pageName = "First page";
+            
             
             // prepare getNextStepFunc
             var getNextStepDel = NextStep.GetNextStepFunc(GetPageRouter());
@@ -23,10 +23,11 @@ namespace BookLib
             var openPageDel = Page.CloseOpenPageFunOnContextAndNextPageFunc(context, getNextStepDel);
             
             // prepare page logic (first page logic)
-            var firstPageLogicDel = FirstPage.GetFirstPage(context);
+            var firstPage = FirstPage.GetFirstPage();
+            context.pageName = firstPage.pageName;
 
             // open first page
-            openPageDel(firstPageLogicDel);
+            openPageDel(firstPage.pageLogic);
             
         }
         
@@ -35,11 +36,11 @@ namespace BookLib
 
             var pageRouter = new Dictionary<string, List<NextPage>>();
             
-            pageRouter.Add("First page",   FirstPage.GetFirstPageNextChoices());
-            pageRouter.Add("Log in page",  LogIn.GetLogInNextChoices());
-            pageRouter.Add("Sign up page", SignUp.GetSignUpNextChoices());
-            pageRouter.Add("Home page up page", HomePage.GetNextsteps());
-            pageRouter.Add("List books page", ListBooksPage.GetListBooksNextChoices());
+            pageRouter.Add(FirstPage.PageName, FirstPage.GetFirstPageNextChoices());
+            pageRouter.Add(LogIn.PageName, LogIn.GetLogInNextChoices());
+            pageRouter.Add(SignUp.PageName, SignUp.GetSignUpNextChoices());
+            pageRouter.Add(HomePage.PageName, HomePage.GetNextNextChoices());
+            pageRouter.Add(ListBooksPage.PageName, ListBooksPage.GetListBooksNextChoices());
             
 
             return pageRouter;
