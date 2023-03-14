@@ -17,7 +17,7 @@ namespace BookLib
             context.pageName = "First page";
             
             // prepare getNextStepFunc
-            var getNextStepDel = NextStep.GetNextStepFunc(GetPageRouter(context));
+            var getNextStepDel = NextStep.GetNextStepFunc(GetPageRouter());
             
             // prepare openPageFunc
             var openPageDel = Page.CloseOpenPageFunOnContextAndNextPageFunc(context, getNextStepDel);
@@ -30,15 +30,16 @@ namespace BookLib
             
         }
         
-        public static Dictionary<string, List<(string pageName, Action<Context> funcDel)>> GetPageRouter(Context context)
+        private static Dictionary<string, List<NextPage>> GetPageRouter()
         {
 
-            var pageRouter = new Dictionary<string, List<(string pageName, Action<Context> funcDel)>>();
+            var pageRouter = new Dictionary<string, List<NextPage>>();
             
-            pageRouter.Add("First page",   FirstPage.GetFirstPageNextChoices(context));
-            pageRouter.Add("Log in page",  LogIn.GetLogInNextChoices(context));
-            pageRouter.Add("Sign up page", SignUp.GetSignUpNextChoices(context));
-            pageRouter.Add("List books page", ListBooksPage.GetListBooksNextChoices(context));
+            pageRouter.Add("First page",   FirstPage.GetFirstPageNextChoices());
+            pageRouter.Add("Log in page",  LogIn.GetLogInNextChoices());
+            pageRouter.Add("Sign up page", SignUp.GetSignUpNextChoices());
+            pageRouter.Add("Home page up page", HomePage.GetNextsteps());
+            pageRouter.Add("List books page", ListBooksPage.GetListBooksNextChoices());
             
 
             return pageRouter;
@@ -46,3 +47,8 @@ namespace BookLib
         
     }
 }
+
+/*
+  'System.Func<BookLib.Context, (string pageName, System.Action<BookLib.Context> funcDel), (string pageName, System.Action<BookLib.Context> funcDel)?>' 
+  'System.Func<BookLib.Context, System.Action<BookLib.Context>, (string pageName, System.Action<BookLib.Context> funcDel)?>'
+*/

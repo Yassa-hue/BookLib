@@ -2,17 +2,14 @@ namespace BookLib;
 
 public class InfoPage
 {
-    public static List<(string pageName, Action<Context> funcDel)> getNextsteps(bool isAdmin)
+    public static List<NextPage> getNextsteps(bool isAdmin)
     {
-        var nextSteps = new List<(string pageName, Action<Context> funcDel, bool adminOnly)>
+        var nextSteps = new List<NextPage>
         {
             // example ("Read book", getReadSessionPageDriver(), false)
         };
 
-        return nextSteps
-            .Where(nextStep => nextStep.adminOnly == isAdmin )
-            .Select(nextStep => (nextStep.pageName, nextStep.funcDel))
-            .ToList();
+        return nextSteps;
     }
 
     public static void openInfoPage(Context context)

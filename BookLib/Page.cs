@@ -1,22 +1,35 @@
 namespace BookLib;
 
+
+using GetNextStepDel = Func<Context, (string pageName, Action<Context> funcDel), (string pageName, Action<Context> nextPageLogic)?>;
 public class Page
 {
-    public static void OpenPage(Context context, Action<Context> pageLogic, 
-        Func<Context, (string pageName, Action<Context> funcDel)> getNextStep)
+    private static void OpenPage(Context context, Action<Context> pageLogic, GetNextStepDel getNextStep)
     {
-        pageLogic(context);
-        
-        var (nextPageName, nextPageFunc) = getNextStep(context);
 
-        context.pageName = nextPageName;
-        
-        OpenPage(context, nextPageFunc, getNextStep);        
+        while (true)
+        {
+            
+            // perform the page logic
+            pageLogic(context);
+            
+            var possibleNextStep = getNextStep(context, (context.pageName ,pageLogic));
+
+            
+            if (possibleNextStep != null)
+            {
+                context.pageName = possibleNextStep.Value.pageName;
+                pageLogic = possibleNextStep.Value.nextPageLogic;
+            }
+            else // if there is no next page exit the program
+            {
+                break;
+            }
+        }     
         
     }
 
-    public static Action<Action<Context>> CloseOpenPageFunOnContextAndNextPageFunc(Context context,
-        Func<Context, (string pageName, Action<Context> funcDel)> getNextStep)
+    public static Action<Action<Context>> CloseOpenPageFunOnContextAndNextPageFunc(Context context,GetNextStepDel getNextStep)
     {
         return pageLogic => OpenPage(context, pageLogic, getNextStep);
     }

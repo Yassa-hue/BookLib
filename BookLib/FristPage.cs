@@ -15,12 +15,12 @@ public static class FirstPage
     }
 
 
-    public static List<(string pageName, Action<Context> funcDel)> GetFirstPageNextChoices(Context context)
+    public static List<NextPage> GetFirstPageNextChoices()
     {
-        return new List<(string pageName, Action<Context> funcDel)>
+        return new List<NextPage>
         {
-            ("Log In page", LogIn.GetLogInPage()),
-            ("Sign Up page", SignUp.GetSignUpPage())
+            new NextPage{pageName = "Log In page", pageLogic = LogIn.GetLogInPage(), adminOnly = false},
+            new NextPage{pageName = "Sign Up page", pageLogic = SignUp.GetSignUpPage(), adminOnly = false}
         };
     }
 

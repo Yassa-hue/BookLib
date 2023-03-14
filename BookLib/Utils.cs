@@ -1,7 +1,5 @@
 using Microsoft.Data.Sqlite;
 
-
-
 namespace BookLib;
 
 public class Context
@@ -10,6 +8,14 @@ public class Context
     public SqliteConnection dbConnection { get; set; }
 
     public string pageName { get; set; }
+}
+
+
+public class NextPage
+{
+    public string pageName { get; set; }
+    public Action<Context> pageLogic { get; set; }
+    public bool adminOnly { get; set; }
 }
 
 public static class Utils

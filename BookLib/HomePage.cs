@@ -3,18 +3,15 @@ namespace BookLib;
 public class HomePage
 {
     // home page next Options
-    public static List<(string pageName, Action<Context> funcDel)> getNextsteps(bool isAdmin)
+    public static List<NextPage> GetNextsteps()
     {
-        var nextSteps = new List<(string pageName, Action<Context> funcDel, bool adminOnly)>
+        var nextSteps = new List<NextPage>
         {
-            ("Info page", InfoPage.getInfoPage(), false),
-            ("List books", ListBooksPage.GetListBooks(), false)
+            new NextPage{pageName = "Info page", pageLogic = InfoPage.getInfoPage(), adminOnly = false },
+            new NextPage{ pageName = "List books", pageLogic = ListBooksPage.GetListBooks(), adminOnly = false}
         };
 
-        return nextSteps
-            .Where(nextStep => (!nextStep.adminOnly || nextStep.adminOnly == isAdmin) )
-            .Select(nextStep => (nextStep.pageName, nextStep.funcDel))
-            .ToList();
+        return nextSteps;
     }
 
     static void HomePageLogic(Context context)

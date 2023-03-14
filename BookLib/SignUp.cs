@@ -65,11 +65,11 @@ public class SignUp
     }
 
 
-    public static List<(string pageName, Action<Context> funcDel)> GetSignUpNextChoices(Context context)
+    public static List<NextPage> GetSignUpNextChoices()
     {
-        return new List<(string pageName, Action<Context> funcDel)>
+        return new List<NextPage>
         {
-            ("Home page", HomePage.GetHomePage())
+            new NextPage{pageName = "Home page", pageLogic = HomePage.GetHomePage(), adminOnly = false}
         };
     }
 }
