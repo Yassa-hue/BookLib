@@ -3,6 +3,8 @@ namespace BookLib;
 
 public class SignUp
 {
+
+    public const string PageName = "Sign Up page";
     static UserSignUpData TakeUserSignUpData()
     {
         // to be implemented

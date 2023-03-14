@@ -47,8 +47,3 @@ namespace BookLib
         
     }
 }
-
-/*
-  'System.Func<BookLib.Context, (string pageName, System.Action<BookLib.Context> funcDel), (string pageName, System.Action<BookLib.Context> funcDel)?>' 
-  'System.Func<BookLib.Context, System.Action<BookLib.Context>, (string pageName, System.Action<BookLib.Context> funcDel)?>'
-*/

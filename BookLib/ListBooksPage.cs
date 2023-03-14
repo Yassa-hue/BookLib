@@ -5,6 +5,8 @@ namespace BookLib;
 public class ListBooksPage
 {
 
+
+    public const string PageName = "List Books Page";
     public static List<Book> GetBooks(SqliteConnection dbConn)
     {
         // to be implemented

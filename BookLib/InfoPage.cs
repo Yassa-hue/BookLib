@@ -2,6 +2,9 @@ namespace BookLib;
 
 public class InfoPage
 {
+
+
+    public const string PageName = "Info page";
     public static List<NextPage> getNextsteps(bool isAdmin)
     {
         var nextSteps = new List<NextPage>

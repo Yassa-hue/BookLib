@@ -5,6 +5,10 @@ namespace BookLib;
 public static class LogIn
 {
 
+
+    public const string PageName = "Log in page";
+    
+    
     // Log In functions
     static UserCred TakeUserCred()
     {

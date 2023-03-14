@@ -2,6 +2,9 @@ namespace BookLib;
 
 public static class FirstPage
 {
+
+
+    public const string PageName = "First page";
     
 
     static void FirstPageWelcomeMsg(Context context)

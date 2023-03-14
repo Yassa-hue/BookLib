@@ -2,6 +2,9 @@ namespace BookLib;
 
 public class HomePage
 {
+
+    public const string PageName = "Home page";
+    
     // home page next Options
     public static List<NextPage> GetNextsteps()
     {
