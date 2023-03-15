@@ -5,11 +5,11 @@ public class InfoPage
 
 
     public const string PageName = "Info page";
-    public static List<NextPage> getNextsteps(bool isAdmin)
+    public static List<NextPage> GetNextSteps()
     {
         var nextSteps = new List<NextPage>
         {
-            // example ("Read book", getReadSessionPageDriver(), false)
+            
         };
 
         return nextSteps;
@@ -19,9 +19,9 @@ public class InfoPage
     {
         Console.WriteLine("Info page");
         
-        // to be implemented : info page logic : printing the user info .. ets
-        
-        
+        Console.WriteLine("\tUser Name : " + context.user.name);
+        Console.WriteLine("\tUser Email : " + context.user.email);
+        Console.WriteLine($"\tUser is {(context.user.isAdmin ? "" : "Not")} admin");
         
     }
 

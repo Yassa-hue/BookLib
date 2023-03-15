@@ -41,6 +41,7 @@ namespace BookLib
             pageRouter.Add(SignUp.PageName, SignUp.GetSignUpNextChoices());
             pageRouter.Add(HomePage.PageName, HomePage.GetNextNextChoices());
             pageRouter.Add(ListBooksPage.PageName, ListBooksPage.GetListBooksNextChoices());
+            pageRouter.Add(InfoPage.PageName, InfoPage.GetNextSteps());
             
 
             return pageRouter;
