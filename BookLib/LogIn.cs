@@ -66,7 +66,7 @@ public static class LogIn
                 int.Parse(dbReader.GetString(0)),
                 dbReader.GetString(1),
                 dbReader.GetString(2),
-                int.Parse(dbReader.GetString(4)) == 1);
+                int.Parse(dbReader.GetString(3)) == 1);
     }
     
 
