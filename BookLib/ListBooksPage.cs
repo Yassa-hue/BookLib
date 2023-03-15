@@ -7,23 +7,53 @@ public class ListBooksPage
 
 
     public const string PageName = "List Books Page";
-    private static List<Book> GetBooks(SqliteConnection dbConn)
+    private static List<BookMinorData> GetBooksFromDb(Context context)
     {
-        // to be implemented
-        return new List<Book>();
+        var dbCom = context.dbConnection.CreateCommand();
+
+        dbCom.CommandText = "SELECT id, title, writer FROM Book LIMIT 10;";
+        
+        var books = new List<BookMinorData>();
+
+        var dbReader = dbCom.ExecuteReader();
+        
+        while (dbReader.Read())
+        {
+            var book = new BookMinorData
+            {
+                id = int.Parse(dbReader.GetString(0)),
+                title = dbReader.GetString(1),
+                writer = dbReader.GetString(2)
+            };
+            
+            books.Add(book);
+        }
+        
+        
+        return books;
     }
 
-    private static void PrintBooks(List<Book> books)
+    private static void PrintBooks(List<BookMinorData> books)
     {
-        // to be implemented
+        foreach (var book in books)
+        {
+            Console.WriteLine("Book ID : " + book.id + ", Title : " + book.title + ", Writer : " + book.writer);
+        }
     }
+
+    
 
     public static Action<Context> GetListBooksPageLogic()
     {
-        var getBooksDel = GetBooks;
+        var getBooksDel = GetBooksFromDb;
         var printBooksDel = PrintBooks;
-        
-        return context => getBooksDel.Compose(printBooksDel);
+        var listBooksDel = getBooksDel.Compose(printBooksDel);
+
+        return cont =>
+        {
+            Console.WriteLine(PageName + "\n\n");
+            listBooksDel(cont);
+        };
     }
     
     
@@ -44,12 +74,9 @@ public class ListBooksPage
 }
 
 
-public class Book
+public class BookMinorData
 {
     public int id { get; set; }
     public string title { get; set; }
     public string writer { get; set; }
-    public string publisher { get; set; }
-    public int pages { get; set; }
-    public string owner { get; set; }
 }
