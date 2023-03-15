@@ -20,9 +20,9 @@ namespace BookLib
             var getNextStepDel = NextStep.GetNextStepFunc(GetPageRouter());
             
             // prepare openPageFunc
-            var openPageDel = Page.CloseOpenPageFunOnContextAndNextPageFunc(context, getNextStepDel);
+            var openPageDel = Page.CloseOnContextAndNextPageFunc(context, getNextStepDel);
             
-            // prepare page logic (first page logic)
+            // prepare first page
             var firstPage = FirstPage.GetFirstPage();
             context.pageName = firstPage.pageName;
 

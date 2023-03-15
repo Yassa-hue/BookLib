@@ -30,7 +30,7 @@ public static class NextStep
         Console.WriteLine("-1 ) Back step");
 
         var selectChoices = allPossibleNextSteps
-            .Select((step, index) => index + " )" + step.pageName)
+            .Select((step, index) => index + " ) " + step.pageName)
             .ToList();
 
         foreach (var choice in selectChoices)
@@ -50,7 +50,7 @@ public static class NextStep
             return backStep;
         }
 
-        return allPossibleNextSteps[0];
+        return allPossibleNextSteps[userChoice];
     }
 
 

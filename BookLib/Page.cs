@@ -29,7 +29,7 @@ public class Page
         
     }
 
-    public static Action<Action<Context>> CloseOpenPageFunOnContextAndNextPageFunc(Context context,GetNextStepDel getNextStep)
+    public static Action<Action<Context>> CloseOnContextAndNextPageFunc(Context context,GetNextStepDel getNextStep)
     {
         return pageLogic => OpenPage(context, pageLogic, getNextStep);
     }
