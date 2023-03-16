@@ -1,13 +1,13 @@
 namespace BookLib;
 
 
-using GetNextStepDel = Func<Context, (string pageName, Action<Context> funcDel), (string pageName, Action<Context> nextPageLogic)?>;
+using GetNextStepDel = Func<Context, PageNameAndLogic, PageNameAndLogic?>;
 public class Page
 {
     private static void OpenPage(Context context, Action<Context> pageLogic, GetNextStepDel getNextStep)
     {
         // empty last page
-        (string pageName, Action<Context> pageLogic) lastPage = ("", c => {});
+        var lastPage = new PageNameAndLogic("", c => {});
         
         while (true)
         {
@@ -21,11 +21,11 @@ public class Page
             if (possibleNextStep != null)
             {
                 // store last page
-                lastPage = (context.pageName, pageLogic);
+                lastPage = new PageNameAndLogic(context.pageName, pageLogic);
                 
                 // move to the next page
-                context.pageName = possibleNextStep.Value.pageName;
-                pageLogic = possibleNextStep.Value.nextPageLogic;
+                context.pageName = possibleNextStep.pageName;
+                pageLogic = possibleNextStep.funcDel;
             }
             else // if there is no next page exit the program
             {
