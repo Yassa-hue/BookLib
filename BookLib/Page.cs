@@ -6,18 +6,24 @@ public class Page
 {
     private static void OpenPage(Context context, Action<Context> pageLogic, GetNextStepDel getNextStep)
     {
-
+        // empty last page
+        (string pageName, Action<Context> pageLogic) lastPage = ("", c => {});
+        
         while (true)
         {
             
             // perform the page logic
             pageLogic(context);
             
-            var possibleNextStep = getNextStep(context, (context.pageName ,pageLogic));
+            var possibleNextStep = getNextStep(context, lastPage);
 
             
             if (possibleNextStep != null)
             {
+                // store last page
+                lastPage = (context.pageName, pageLogic);
+                
+                // move to the next page
                 context.pageName = possibleNextStep.Value.pageName;
                 pageLogic = possibleNextStep.Value.nextPageLogic;
             }

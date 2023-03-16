@@ -6,7 +6,6 @@ public class Context
 { 
     public User user { get; set; }
     public SqliteConnection dbConnection { get; set; }
-
     public string pageName { get; set; }
 }
 
@@ -35,9 +34,20 @@ public static class Utils
         return () => f2(f1());
     }
     
+    public static Action Compose<T1>(this Func<T1> f1, Action<T1> f2)
+    {
+        return () => f2(f1());
+    }
+    
     public static Func<T1, T2> ComposeWithDbConn<T1, T2>(this Func<T1, SqliteConnection, T2> f, SqliteConnection dbConn)
     {
         return (x) => f(x, dbConn);
+    }
+    
+    
+    public static Func<T1, T2> ComposeWithContext<T1, T2>(this Func<Context, T1, T2> f, Context context)
+    {
+        return (x) => f(context, x);
     }
 
 
