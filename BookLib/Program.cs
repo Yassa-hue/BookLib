@@ -17,7 +17,7 @@ namespace BookLib
             
             
             // prepare getNextStepFunc
-            var getNextStepDel = NextStep.GetNextStepFunc(GetPageRouter());
+            var getNextStepDel = NextStep.GetNextStepFunc(GetPageRouter(context));
             
             // prepare openPageFunc
             var openPageDel = Page.CloseOnContextAndNextPageFunc(context, getNextStepDel);
@@ -31,7 +31,7 @@ namespace BookLib
             
         }
         
-        private static Dictionary<string, List<NextPage>> GetPageRouter()
+        private static Dictionary<string, List<NextPage>> GetPageRouter(Context context)
         {
 
             var pageRouter = new Dictionary<string, List<NextPage>>();
@@ -40,8 +40,9 @@ namespace BookLib
             pageRouter.Add(LogIn.PageName, LogIn.GetLogInNextChoices());
             pageRouter.Add(SignUp.PageName, SignUp.GetSignUpNextChoices());
             pageRouter.Add(HomePage.PageName, HomePage.GetNextNextChoices());
-            pageRouter.Add(ListBooksPage.PageName, ListBooksPage.GetListBooksNextChoices());
+            pageRouter.Add(ListBooksPage.PageName, ListBooksPage.GetListBooksNextChoices(context));
             pageRouter.Add(InfoPage.PageName, InfoPage.GetNextSteps());
+            pageRouter.Add(BookDetailsPage.PageName, BookDetailsPage.GetBookDetailsNextChoices());
             
 
             return pageRouter;

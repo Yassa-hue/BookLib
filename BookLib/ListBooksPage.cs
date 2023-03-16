@@ -57,11 +57,11 @@ public class ListBooksPage
     }
     
     
-    public static List<NextPage> GetListBooksNextChoices()
+    public static List<NextPage> GetListBooksNextChoices(Context context)
     {
         return new List<NextPage>
         {
-            
+            BookDetailsPage.GetBookDetailsPage(context)
         };
     }
 
