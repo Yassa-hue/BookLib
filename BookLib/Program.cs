@@ -45,7 +45,7 @@ namespace BookLib
             pageRouter.Add(BookDetailsPage.PageName, BookDetailsPage.GetBookDetailsNextChoices());
             pageRouter.Add(AddBookPage.PageName, AddBookPage.GetAddBookNextChoices());
             pageRouter.Add(PreferBookPage.PageName, PreferBookPage.GetPreferBookPageNextChoices());
-            
+            pageRouter.Add(ListPreferredBooksPage.PageName, ListPreferredBooksPage.GetListPreferredBooksPageNextChoices());
 
             return pageRouter;
         }

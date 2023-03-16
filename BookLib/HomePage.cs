@@ -4,19 +4,6 @@ public class HomePage
 {
 
     public const string PageName = "Home page";
-    
-    // home page next Options
-    public static List<NextPage> GetNextNextChoices()
-    {
-        var nextSteps = new List<NextPage>
-        {
-            InfoPage.GetInfoPage(),
-            ListBooksPage.GetListBooksPage(),
-            AddBookPage.GetAddBookPage()
-        };
-
-        return nextSteps;
-    }
 
     static void HomePageLogic(Context context)
     {
@@ -28,7 +15,21 @@ public class HomePage
     {
         return context => HomePageLogic(context);
     }
+
     
+    // home page next Options
+    public static List<NextPage> GetNextNextChoices()
+    {
+        var nextSteps = new List<NextPage>
+        {
+            InfoPage.GetInfoPage(),
+            ListBooksPage.GetListBooksPage(),
+            AddBookPage.GetAddBookPage(),
+            ListPreferredBooksPage.GetListPreferredBooksPage()
+        };
+
+        return nextSteps;
+    }
     
     public static NextPage GetHomePage()
     {

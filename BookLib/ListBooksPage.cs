@@ -80,4 +80,9 @@ public class BookMinorData
     public int id { get; set; }
     public string title { get; set; }
     public string writer { get; set; }
+
+    public override string ToString()
+    {
+        return "ID : " + id + ", Title : " + title + ", Writer : " + writer;
+    }
 }

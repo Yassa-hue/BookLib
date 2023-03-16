@@ -9,7 +9,7 @@ public class InfoPage
     {
         var nextSteps = new List<NextPage>
         {
-            
+            ListPreferredBooksPage.GetListPreferredBooksPage()
         };
 
         return nextSteps;
