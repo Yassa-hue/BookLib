@@ -49,15 +49,24 @@ public class BookDetailsPage
     }
 
 
-    private static Action<Context> GetBookDetailsLogic(Context context)
+
+    private static Action<Context> Compose(
+        Func<int> f1,
+        Func<Context, int, BookDetails> f2,
+        Action<BookDetails> f3)
+    {
+        return cont => f3(f2(cont, f1()));
+    }
+
+
+    private static Action<Context> GetBookDetailsLogic()
     {
 
         var getBookIdDel = GetBookIdFromUser;
-        var getBookDetailsWithContext = GetBookDetails;
-        var getBookDetailsDel = Utils.ComposeWithContext(getBookDetailsWithContext, context);
+        var getBookDetailsDel = GetBookDetails;
         var printBookDetailsDel = PrintBookDetails;
         
-        var bookDetails = getBookIdDel.Compose(getBookDetailsDel).Compose(printBookDetailsDel);
+        var bookDetails = Compose(getBookIdDel, getBookDetailsDel, printBookDetailsDel);
 
         return context =>
         {
@@ -68,7 +77,7 @@ public class BookDetailsPage
             {
                 try
                 {
-                    bookDetails();
+                    bookDetails(context);
                     break;
                 }
                 catch (Exception e)
@@ -91,9 +100,9 @@ public class BookDetailsPage
     }
 
 
-    public static NextPage GetBookDetailsPage(Context context)
+    public static NextPage GetBookDetailsPage()
     {
-        return new NextPage { pageName = PageName, pageLogic = GetBookDetailsLogic(context), adminOnly = false };
+        return new NextPage { pageName = PageName, pageLogic = GetBookDetailsLogic(), adminOnly = false };
     }
     
     
