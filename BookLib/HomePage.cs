@@ -11,7 +11,8 @@ public class HomePage
         var nextSteps = new List<NextPage>
         {
             InfoPage.GetInfoPage(),
-            ListBooksPage.GetListBooksPage()
+            ListBooksPage.GetListBooksPage(),
+            AddBookPage.GetAddBookPage()
         };
 
         return nextSteps;

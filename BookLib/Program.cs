@@ -43,6 +43,7 @@ namespace BookLib
             pageRouter.Add(ListBooksPage.PageName, ListBooksPage.GetListBooksNextChoices());
             pageRouter.Add(InfoPage.PageName, InfoPage.GetNextSteps());
             pageRouter.Add(BookDetailsPage.PageName, BookDetailsPage.GetBookDetailsNextChoices());
+            pageRouter.Add(AddBookPage.PageName, AddBookPage.GetAddBookNextChoices());
             
 
             return pageRouter;
