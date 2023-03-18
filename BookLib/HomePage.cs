@@ -25,7 +25,8 @@ public class HomePage
             InfoPage.GetInfoPage(),
             ListBooksPage.GetListBooksPage(),
             AddBookPage.GetAddBookPage(),
-            ListPreferredBooksPage.GetListPreferredBooksPage()
+            ListPreferredBooksPage.GetListPreferredBooksPage(),
+            ReadBookPage.GetReadBookPage()
         };
 
         return nextSteps;

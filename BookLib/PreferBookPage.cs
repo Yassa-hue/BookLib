@@ -58,7 +58,8 @@ public class PreferBookPage
         return new List<NextPage>
         {
             BookDetailsPage.GetBookDetailsPage(),
-            ListPreferredBooksPage.GetListPreferredBooksPage()
+            ListPreferredBooksPage.GetListPreferredBooksPage(),
+            ReadBookPage.GetReadBookPage()
         };
     }
     

@@ -95,7 +95,8 @@ public class BookDetailsPage
     {
         return new List<NextPage>
         {
-            PreferBookPage.GetPreferBookPage()
+            PreferBookPage.GetPreferBookPage(),
+            ReadBookPage.GetReadBookPage()
         };
     }
 
