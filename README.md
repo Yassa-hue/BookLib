@@ -8,4 +8,4 @@ You can create account, browse books, add book to your collection and read books
 * Databases : Indexes are used to maintain high performance as the number of records grows.
 * C# : Intensive use of C# function delegations, function composition and containers.  
 
-To run this project properly you have to move the database file ` ./BookLib/book.db` to ` BookLib/bin/Debug/net7.0` in order to be accessible by the code. 
+To run this project properly you have to move the database file ` ./BookLib/book.db` to `BookLib/bin/Debug/net7.0` in order to be accessible by the code. 
